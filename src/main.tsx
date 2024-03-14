@@ -9,7 +9,7 @@ import Error from './pages/Error.tsx';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>,
+    element: <Home />,
     errorElement: <Error />
   },
   {
@@ -17,7 +17,6 @@ const router = createBrowserRouter([
     element: <Error />,
   }
 ]);
-
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

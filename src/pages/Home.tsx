@@ -6,7 +6,7 @@ function Home() {
   return (
     <div className='w-full h-full flex flex-wrap bg-slate-900'>
       <Header />
-      <div className='grid grid-flow-col space-x-10 '>
+      <div className='flex'>
         <Nav />
         <Content />
       </div>
