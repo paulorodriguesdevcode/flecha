@@ -1,39 +1,82 @@
+import { useEffect, useState } from "react";
+
+interface IResponseData {
+  id: string,
+  name: string,
+  target: number,
+  answers: number,
+  pending: number
+}
+
 function Content() {
-  return (
-    <div>
-      <h3 className="text-gray-200 text-2xl mt-10 ml-10">Solicitações realizadas</h3>
-      <table className="ml-10 border border-slate-800 mt-10 h-52 min-w-screen">
-        <thead>
-          <tr className="text-gray-400 p-10">
-            <th>Solicitação</th>
-            <th>Público alvo</th>
-            <th>Respostas</th>
-            <th>Pendente</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="text-gray-200 text-center hover:bg-slate-700 hover:cursor-pointer">
-            <td className="">Arregimentação Arena</td>
-            <td className="">12</td>
-            <td className="">4</td>
-            <td className="">8</td>
-          </tr>
+  const [responseData, setResponseData] = useState<IResponseData[]>([]);
+  const [error, setError] = useState(null);
 
-          <tr className="text-gray-200 text-center hover:bg-slate-700 hover:cursor-pointer ">
-            <td className="">Arregimentação Domingo</td>
-            <td className="">12</td>
-            <td className="">4</td>
-            <td className="">8</td>
-          </tr>
+  useEffect(() => {
+    console.log('effect')
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://rod-tools.onrender.com/flecha');
+        if (!response.ok) {
+          throw new Error('Erro ao buscar os dados');
+        }
+        const data = await response.json();
+        setResponseData(data);
+        console.log(data)
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
 
-          <tr className="text-gray-200 text-center hover:bg-slate-700 hover:cursor-pointer ">
-            <td className="">Arregimentação Terça</td>
-            <td className="">12</td>
-            <td className="">4</td>
-            <td className="">8</td>
-          </tr>
-        </tbody>
-      </table>
+    fetchData();
+  }, []);
+
+  return error ? (
+    <div className="flex text-center justify-center">
+      <p className="text-white text-4xl ">Ocorreu o erro: {JSON.stringify(error)}</p>
+    </div>
+  ) : (
+    <div className="m-10">
+      <h3 className="text-gray-200 text-2xl ml-5">Solicitações realizadas</h3>
+      <div className="mt-10 overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-center text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Solicitação
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Público alvo
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Respostas
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Pendente
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              responseData.map(item => (
+                <tr key={item.id} className="border-b dark:bg-slate-800 dark:border-gray-700 hover:bg-slate-700 dark:hover:bg-slate-700">
+                  <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {item.name}
+                  </th>
+                  <td className="px-6 py-4">
+                    {item.target}
+                  </td>
+                  <td className="px-6 py-4">
+                    {item.answers}
+                  </td>
+                  <td className="px-6 py-4">
+                    {item.pending}
+                  </td>
+                </tr>))
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
