@@ -2,19 +2,27 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import './index.css'
-import Home from './pages/Home.tsx';
+import SolicitationsPage from './pages/Solicitations.tsx';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Error from './pages/Error.tsx';
+import Users from './components/UsersTable.tsx';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />,
-    errorElement: <Error />
+    path: "/solicitations",
+    element: <SolicitationsPage />,
+    errorElement: <Error />,
+    
   },
   {
     path: "/solicitation/:id",
-    element: <Error />,
+    element: <SolicitationsPage />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/users",
+    element: <Users />,
+    errorElement: <Error />
   }
 ]);
 

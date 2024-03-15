@@ -8,7 +8,7 @@ interface IResponseData {
   pending: number
 }
 
-function Content() {
+function Solicitations() {
   const [responseData, setResponseData] = useState<IResponseData[]>([]);
   const [error, setError] = useState(null);
 
@@ -16,7 +16,7 @@ function Content() {
     console.log('effect')
     const fetchData = async () => {
       try {
-        const response = await fetch('https://rod-tools.onrender.com/flecha');
+        const response = await fetch('https://rod-tools.onrender.com/solicitations');
         if (!response.ok) {
           throw new Error('Erro ao buscar os dados');
         }
@@ -81,4 +81,4 @@ function Content() {
   )
 }
 
-export default Content
+export default Solicitations
